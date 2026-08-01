@@ -1,0 +1,9 @@
+data_path: "data/raw/telco_churn.csv"
+target_column: "Churn"
+test_size: 0.2
+random_state: 42
+
+optuna:
+  n_trials: 20
+  direction: "maximize"
+  metric: "roc_auc"
