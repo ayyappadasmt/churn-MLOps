@@ -25,10 +25,9 @@ WORKDIR /app/src
 # Step 6: Document which port this container listens on (informational
 # — doesn't actually publish the port by itself, that happens in Step 5
 # below when we RUN the container)
-EXPOSE 8000
-
+EXPOSE 7860
 # Step 7: The command that runs when the container starts.
 # --host 0.0.0.0 is REQUIRED here (not optional like in --reload dev
 # mode) — it tells uvicorn to accept connections from outside the
 # container, not just from localhost inside it.
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "7860"]
