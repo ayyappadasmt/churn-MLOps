@@ -1,0 +1,46 @@
+name: CI
+
+# WHEN this workflow runs: on every push to main, and on every pull request
+# targeting main. This means you get feedback both when you push directly
+# AND if you ever open a PR before merging.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ---- JOB 1: run the test suite ----
+  test:
+    runs-on: ubuntu-latest   # GitHub spins up a fresh Ubuntu Linux VM for this
+
+    steps:
+      # Step A: pull your repo's code into that fresh VM (it starts empty)
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step B: install Python on that VM
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Step C: install your project's dependencies, same as locally
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Step D: run pytest, exactly like you do locally, but on a clean machine
+      - name: Run tests
+        run: pytest tests/ -v
+
+  # ---- JOB 2: build the Docker image (only runs if tests pass) ----
+  build:
+    needs: test   # <-- this makes "build" wait for "test" to succeed first
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t churn-mlops .
