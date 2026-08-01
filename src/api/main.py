@@ -115,3 +115,10 @@ def predict(customer: CustomerData):
         "churn_prediction": bool(prediction),
         "confidence": round(float(probability), 4)
     }
+@app.get("/")
+def root():
+    return {
+        "message": "Churn Prediction API is running",
+        "docs": "/docs",
+        "health": "/health"
+    }
