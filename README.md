@@ -114,3 +114,95 @@ application and deployed publicly on Render.
                          │    /health          │
                          │    /docs            │
                          └─────────────────────┘
+
+```
+
+## Running It Yourself
+## Running It Yourself
+
+### Locally
+
+Clone the repository and install the dependencies:
+
+```bash
+```
+git clone https://github.com/ayyappadasmt/churn-MLOps.git
+cd churn-MLOps
+
+python -m venv venv
+venv\Scripts\activate        # Windows
+
+pip install -r requirements.txt
+
+Start the application:
+cd src
+python train.py             # Optional — a trained model is already included
+uvicorn api.main:app --reload
+
+The API will be available at:
+
+http://127.0.0.1:8000
+
+Open the interactive Swagger API documentation:
+
+http://127.0.0.1:8000/docs
+
+With Docker
+
+Build the Docker image:
+
+docker build -t churn-mlops .
+
+Run the container:
+
+docker run -p 8000:8000 churn-mlops
+
+The API will then be available at:
+
+http://127.0.0.1:8000
+
+Swagger documentation:
+
+http://127.0.0.1:8000/docs
+
+Running Tests
+
+Run the complete test suite using:
+
+pytest tests/ -v
+
+This executes the project's automated tests and verifies the core functionality of the application.
+
+View Experiment History
+
+MLflow is used to track experiments, Optuna trials, parameters, metrics, and model performance.
+
+From the project root:
+
+cd src
+mlflow ui
+
+Then open:
+
+http://127.0.0.1:5000
+
+The MLflow dashboard allows you to compare:
+
+Optuna hyperparameter optimization trials
+Model parameters
+Evaluation metrics
+Training runs
+The final selected model
+
+Future Additions
+
+This project covers the core MLOps lifecycle end-to-end, but there's a clear next set of practices that would take it further toward a fully production-grade system:
+
+Data drift detection — comparing incoming live request data against the training distribution (e.g., with Evidently AI) to catch when real-world data starts to diverge from what the model was trained on.
+Automated retraining pipeline — triggering retraining on a schedule or when drift/performance degradation is detected, rather than only ever manually.
+Live prediction monitoring — logging every prediction request/response, and once true outcomes become available, reconciling them against predictions to track real-world accuracy decay over time.
+Model registry with staged promotion — using MLflow's Model Registry to move models through staging → production with explicit approval gates, instead of always deploying the latest trained artifact.
+Alerting — wiring failed CI runs, deployment errors, or detected drift into Slack/email notifications instead of relying on manually checking dashboards.
+A/B testing or shadow deployment — running a challenger model alongside the production model on live traffic before fully promoting it.
+Infrastructure as code — managing the deployment configuration (Render service, environment variables, scaling settings) declaratively instead of through a manual dashboard setup.
+Feature store — centralizing feature computation so training and serving pull from the same consistent source, reducing the risk of training-serving skew as the project grows.
