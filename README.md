@@ -1,4 +1,4 @@
-# Churn Prediction — End-to-End MLOps Pipeline
+# End-to-End MLOps Churn Prediction Pipeline
 
 End-to-end MLOps pipeline for predicting customer churn, built to demonstrate production-oriented machine learning practices including experiment tracking, hyperparameter optimization, automated testing, containerization, continuous integration, and model serving.
 
