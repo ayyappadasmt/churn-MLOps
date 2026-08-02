@@ -12,6 +12,8 @@ The trained churn prediction model is served through a containerized FastAPI app
 - **Interactive Swagger UI:** https://churn-mlops-1.onrender.com/docs
 
 > **Note:** The free Render deployment may take around a minute to wake up after a period of inactivity.
+> **Note:**Why Render Was Used Instead of Hugging Face: Hugging Face Spaces was the original deployment target, chosen for its zero-friction Docker-SDK deployment and its recognizability within ML/AI hiring contexts. During deployment, however, Hugging Face's Docker-SDK Spaces were found to require a paid plan rather than being available on the free tier, which was a hard blocker for a zero-budget, time-constrained project.
+Render was chosen as the replacement because it satisfied the same requirements without any code changes: it builds directly from an existing Dockerfile, connects natively to a GitHub repository (so pushes can trigger redeploys), offers a genuinely free tier for small web services, and produces a permanent public HTTPS URL suitable for sharing with a recruiter or interviewer. Because the containerization work from Phase 3 was platform-agnostic by design, switching hosts required no 
 
 ---
 
